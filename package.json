@@ -1,0 +1,23 @@
+{
+  "name": "maven-semantic-release",
+  "version": "0.0.1",
+  "description": "a very simple maven plugin for semantic release",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terrestris/maven-semantic-release.git"
+  },
+  "author": "terrestris GmbH & Co. KG <info@terrestris.de>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/terrestris/maven-semantic-release/issues"
+  },
+  "homepage": "https://github.com/terrestris/maven-semantic-release#readme",
+  "dependencies": {
+    "@semantic-release/error": "^3.0.0",
+    "execa": "^6.1.0"
+  }
+}
