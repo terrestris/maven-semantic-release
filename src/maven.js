@@ -3,7 +3,7 @@
  */
 
 const SemanticReleaseError = require("@semantic-release/error");
-const execa = require('execa');
+const execa = require('execa').execa;
 
 function exec () {
     const childProcess = execa(...arguments);
