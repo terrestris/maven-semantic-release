@@ -20,13 +20,25 @@ async function updateVersion(logger, versionStr) {
     );
 }
 
-async function deploy(logger, nextRelease, settingsFile) {
+async function deploy(logger, nextRelease, deployMethod, settingsFile) {
     logger.log('Deploying version %s with maven', nextRelease.version);
+
+    if (!['deploy', 'jib'].includes(deployMethod)) {
+        throw new Error(`unrecognized deploy method ${deployMethod}`);
+    }
+
     try {
-        await exec(
-            'mvn',
-            ['deploy', '-DskipTests', '--settings', settingsFile]
-        );
+        if (deployMethod === 'deploy') {
+            await exec(
+                'mvn',
+                ['deploy', '-DskipTests', '--settings', settingsFile]
+            );
+        } else if (deployMethod === 'jib') {
+            await exec(
+                'mvn',
+                ['package', 'jib:build', '-DskipTests', '--settings', settingsFile]
+            );
+        }
     } catch (e) {
         logger.error('failed to deploy to maven');
         logger.error(e);
