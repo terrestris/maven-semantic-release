@@ -18,6 +18,6 @@
   "homepage": "https://github.com/terrestris/maven-semantic-release#readme",
   "dependencies": {
     "@semantic-release/error": "^3.0.0",
-    "execa": "^6.1.0"
+    "execa": "^5.1.1"
   }
 }
