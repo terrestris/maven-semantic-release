@@ -31,12 +31,12 @@ async function deploy(logger, nextRelease, deployMethod, settingsFile) {
         if (deployMethod === 'deploy') {
             await exec(
                 'mvn',
-                ['deploy', '-DskipTests', '--settings', settingsFile]
+                ['clean', 'deploy', '-DskipTests', '--settings', settingsFile]
             );
         } else if (deployMethod === 'jib') {
             await exec(
                 'mvn',
-                ['package', 'jib:build', '-DskipTests', '--settings', settingsFile]
+                ['clean', 'package', 'jib:build', '-DskipTests', '--settings', settingsFile]
             );
         }
     } catch (e) {
