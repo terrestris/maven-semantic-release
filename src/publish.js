@@ -9,8 +9,8 @@ module.exports = async function publish (pluginConfig, {
 }) {
     logger.log('publish mvn release');
 
-    const settingsFile = options.mavenSettingsPath || '.m2/settings.xml';
-    const deployMethod = options.mavenDeployMethod || 'deploy';
+    const settingsFile = pluginConfig.mavenSettingsPath || '.m2/settings.xml';
+    const deployMethod = pluginConfig.mavenDeployMethod || 'deploy';
 
     await deploy(logger, nextRelease.version, deployMethod, settingsFile);
 };
