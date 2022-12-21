@@ -10,8 +10,8 @@ Was inspired by https://github.com/conveyal/maven-semantic-release.
 
 ## Getting started
 
-* Install `semantic-release` and add `maven-semantic-release` as a plugin (https://semantic-release.gitbook.io/semantic-release/usage/plugins)
-* Configure `mavenSettingsPath` or ensure that a maven settings file exists in the expected path
+* Install `semantic-release` and add `@terrestris/maven-semantic-release` as a plugin (https://semantic-release.gitbook.io/semantic-release/usage/plugins)
+* Configure `mavenSettingsPath` or ensure that a maven settings file exists at the expected location
 * Make sure that the `@semantic-release/git` plugin runs after this plugin and includes the `pom.xml` if you want to use it.
 
 ## Options
