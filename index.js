@@ -1,5 +1,6 @@
 module.exports = {
+    verifyConditions: require('./src/verify-conditions'),
     prepare: require('./src/prepare'),
     publish: require('./src/publish'),
-    verifyConditions: require('./src/verify-conditions')
+    success: require('./src/success')
 };
