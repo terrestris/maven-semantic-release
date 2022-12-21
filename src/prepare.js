@@ -3,7 +3,7 @@ const {
 } = require("./maven");
 
 const {
-    stagePomXml
+    commitPomXml
 } = require("./git");
 
 module.exports = async function prepare(pluginConfig, {
@@ -13,5 +13,5 @@ module.exports = async function prepare(pluginConfig, {
     logger.log('prepare maven release');
 
     await updateVersion(logger, nextRelease.version);
-    await stagePomXml(logger);
+    await commitPomXml(logger);
 };
