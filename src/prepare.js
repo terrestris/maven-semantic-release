@@ -1,7 +1,10 @@
 const {
     updateVersion
 } = require("./maven");
-const {stagePomXml} = require("./git");
+
+const {
+    stagePomXml
+} = require("./git");
 
 module.exports = async function prepare(pluginConfig, {
     logger,
