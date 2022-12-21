@@ -14,6 +14,14 @@ async function updateVersion(logger, versionStr) {
     );
 }
 
+async function updateSnapshotVersion(logger) {
+    logger.log(`Update pom.xml to next snapshot version`);
+    await exec(
+        'mvn',
+        ['versions:set', '-DnextSnapshot=true', '-DgenerateBackupPoms=false']
+    );
+}
+
 async function deploy(logger, nextRelease, deployMethod, settingsFile) {
     logger.log('Deploying version %s with maven', nextRelease.version);
 
@@ -57,5 +65,6 @@ async function testMvn(logger) {
 module.exports = {
     deploy,
     updateVersion,
+    updateSnapshotVersion,
     testMvn
 };
