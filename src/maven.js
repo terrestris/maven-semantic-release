@@ -3,14 +3,8 @@
  */
 
 const SemanticReleaseError = require("@semantic-release/error");
-const execa = require('execa');
 
-function exec() {
-    const childProcess = execa(...arguments);
-    childProcess.stdout.pipe(process.stdout);
-    childProcess.stderr.pipe(process.stderr);
-    return childProcess;
-}
+const { exec } = require('./exec');
 
 async function updateVersion(logger, versionStr) {
     logger.log(`Updating pom.xml to version ${versionStr}`);

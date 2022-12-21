@@ -4,4 +4,12 @@ This plugin only runs two maven commands and is heavily inspired by https://gith
 
 It does not do any checks, but only tries to increase the version number via `mvn` and then deploy to the configured repository.
 
-It needs a maven settings file which is by default `.m2/settings.xml` or can be configured via the option `mavenSettingsPath`.
+## Getting started
+
+* Install `semantic-release` and add `maven-semantic-release` as a plugin (https://semantic-release.gitbook.io/semantic-release/usage/plugins)
+* Configure `mavenSettingsPath` or ensure that a maven settings file exists in the expected path
+
+## Options
+
+* `mavenSettingsPath`: path to a maven settings file (default: `'.m2/settings.xml'`)
+* `mavenDeployMethod`: either `'deploy'` or `'jib'`. This determines which mvn targets are used to deploy. `deploy` uses the `deploy` target and `jib` uses `package jib:build`
