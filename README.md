@@ -1,8 +1,12 @@
 # maven-semantic-release
 
-This plugin only runs two maven commands and is heavily inspired by https://github.com/conveyal/maven-semantic-release.
+This is a simple plugin that allows users to increase versions in `pom.xml` and publish via maven, either with the `deploy` or the `jib:build` target. 
 
-It does not do any checks, but only tries to increase the version number via `mvn` and then deploy to the configured repository.
+It has an option to increase the version after release to the next snapshot version
+
+It only assures that the `mvn` command exists.
+
+Was inspired by https://github.com/conveyal/maven-semantic-release.
 
 ## Getting started
 
