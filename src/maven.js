@@ -22,8 +22,8 @@ async function updateSnapshotVersion(logger) {
     );
 }
 
-async function deploy(logger, nextRelease, deployMethod, settingsFile) {
-    logger.log('Deploying version %s with maven', nextRelease.version);
+async function deploy(logger, nextVersion, deployMethod, settingsFile) {
+    logger.log('Deploying version %s with maven', nextVersion);
 
     if (!['deploy', 'jib'].includes(deployMethod)) {
         throw new Error(`unrecognized deploy method ${deployMethod}`);
