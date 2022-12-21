@@ -24,7 +24,7 @@ module.exports = async function success (pluginConfig, {
         logger.log('Staging pom.xml');
         await add(['pom.xml'], execaOptions);
         logger.log('Committing pom.xml');
-        await commit('Setting next snapshot version [skip ci]', execaOptions);
+        await commit('chore: Setting next snapshot version [skip ci]', execaOptions);
         logger.log('Pushing commit');
         await push(repositoryUrl, branch.name, execaOptions);
     }
