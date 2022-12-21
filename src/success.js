@@ -15,8 +15,6 @@ module.exports = async function success (pluginConfig, {
     branch,
     options: { repositoryUrl }
 }) {
-    logger.log('publish mvn release');
-
     const updateSnapshotVersionOpt = pluginConfig.updateSnapshotVersion || false;
     if (updateSnapshotVersionOpt) {
         await updateSnapshotVersion(logger);
