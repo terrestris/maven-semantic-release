@@ -2,7 +2,7 @@ const {
     deploy
 } = require("./maven");
 
-module.exports = async function publish (pluginConfig, {
+module.exports = async function publish(pluginConfig, {
     logger,
     nextRelease
 }) {

@@ -2,7 +2,7 @@ const {
     testMvn
 } = require("./maven");
 
-module.exports = async function prepare(pluginConfig, context) {
+module.exports = async function verifyConditions(pluginConfig, context) {
     const {
         logger
     } = context;

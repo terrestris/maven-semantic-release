@@ -8,7 +8,7 @@ const {
     push
 } = require('@semantic-release/git/lib/git')
 
-module.exports = async function success (pluginConfig, {
+module.exports = async function success(pluginConfig, {
     logger,
     env,
     cwd,
@@ -16,13 +16,14 @@ module.exports = async function success (pluginConfig, {
     options: { repositoryUrl }
 }) {
     const updateSnapshotVersionOpt = pluginConfig.updateSnapshotVersion || false;
+    const snapshotCommitMessage = pluginConfig.snapshotCommitMessage || 'chore: setting next snapshot version [skip ci]';
     if (updateSnapshotVersionOpt) {
         await updateSnapshotVersion(logger);
         const execaOptions = { env, cwd };
         logger.log('Staging pom.xml');
         await add(['pom.xml'], execaOptions);
         logger.log('Committing pom.xml');
-        await commit('chore: Setting next snapshot version [skip ci]', execaOptions);
+        await commit(snapshotCommitMessage, execaOptions);
         logger.log('Pushing commit');
         await push(repositoryUrl, branch.name, execaOptions);
     }

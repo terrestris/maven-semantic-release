@@ -15,3 +15,4 @@ It does not do any checks, but only tries to increase the version number via `mv
 * `settingsPath`: path to a maven settings file (default: `'.m2/settings.xml'`)
 * `deployMethod`: either `'deploy'` or `'jib'`. This determines which mvn targets are used to deploy. `deploy` uses the `deploy` target and `jib` uses `package jib:build` (default: `'deploy'`)
 * `updateSnapshotVersion`: either `true` or `false`. Whether a new snapshot version should be set after releasing. (default: `false`)
+* `snapshotCommitMessage`: the commit message used if a new snapshot version should be created (default: `'chore: setting next snapshot version [skip ci]'`)
