@@ -18,6 +18,7 @@ Was inspired by https://github.com/conveyal/maven-semantic-release.
 ## Options
 
 * `settingsPath`: path to a maven settings file (default: `'.m2/settings.xml'`)
+* `clean`: either `true` or `false`. Whether the `clean` target will be applied before publishing. (default: `true`)
 * `mavenTarget`: possible values: `deploy`, `package jib:build`, `deploy jib:build`. This determines which mvn targets are used to publish. (default: `'deploy'`)
 * `updateSnapshotVersion`: either `true` or `false`. Whether a new snapshot version should be set after releasing. (default: `false`)
 * `snapshotCommitMessage`: the commit message used if a new snapshot version should be created (default: `'chore: setting next snapshot version [skip ci]'`)

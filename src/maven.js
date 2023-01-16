@@ -22,7 +22,7 @@ async function updateSnapshotVersion(logger) {
     );
 }
 
-async function deploy(logger, nextVersion, mavenTarget, settingsPath) {
+async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean) {
     logger.log('Deploying version %s with maven', nextVersion);
 
     const availableTargets = [
@@ -35,10 +35,12 @@ async function deploy(logger, nextVersion, mavenTarget, settingsPath) {
         throw new Error(`unrecognized maven target ${mavenTarget}`);
     }
 
+    const cleanTarget = clean ? ['clean'] : [];
+
     try {
         await exec(
           'mvn',
-          ['clean', ...mavenTarget.split(' '), '-DskipTests', '--settings', settingsPath]
+          [...cleanTarget, ...mavenTarget.split(' '), '-DskipTests', '--settings', settingsPath]
         );
     } catch (e) {
         logger.error('failed to deploy to maven');
