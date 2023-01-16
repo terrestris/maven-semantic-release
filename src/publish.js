@@ -8,8 +8,12 @@ module.exports = async function publish(pluginConfig, {
 }) {
     logger.log('publish mvn release');
 
-    const settingsFile = pluginConfig.settingsPath || '.m2/settings.xml';
-    const deployMethod = pluginConfig.deployMethod || 'deploy';
+    const settingsPath = pluginConfig.settingsPath || '.m2/settings.xml';
+    const mavenTarget = pluginConfig.mavenTarget || 'deploy';
 
-    await deploy(logger, nextRelease.version, deployMethod, settingsFile);
+    if (!/^[\w~./]$/.test(settingsPath)) {
+        throw new Error('config settingsPath contains disallowed characters');
+    }
+
+    await deploy(logger, nextRelease.version, mavenTarget, settingsPath);
 };
