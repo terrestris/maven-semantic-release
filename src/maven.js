@@ -22,25 +22,26 @@ async function updateSnapshotVersion(logger) {
     );
 }
 
-async function deploy(logger, nextVersion, deployMethod, settingsFile) {
+async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean) {
     logger.log('Deploying version %s with maven', nextVersion);
 
-    if (!['deploy', 'jib'].includes(deployMethod)) {
-        throw new Error(`unrecognized deploy method ${deployMethod}`);
+    const availableTargets = [
+      'deploy',
+      'package jib:build',
+      'deploy jib:build'
+    ];
+
+    if (!availableTargets.includes(mavenTarget)) {
+        throw new Error(`unrecognized maven target ${mavenTarget}`);
     }
 
+    const cleanTarget = clean ? ['clean'] : [];
+
     try {
-        if (deployMethod === 'deploy') {
-            await exec(
-                'mvn',
-                ['clean', 'deploy', '-DskipTests', '--settings', settingsFile]
-            );
-        } else if (deployMethod === 'jib') {
-            await exec(
-                'mvn',
-                ['clean', 'package', 'jib:build', '-DskipTests', '--settings', settingsFile]
-            );
-        }
+        await exec(
+          'mvn',
+          [...cleanTarget, ...mavenTarget.split(' '), '-DskipTests', '--settings', settingsPath]
+        );
     } catch (e) {
         logger.error('failed to deploy to maven');
         logger.error(e);
