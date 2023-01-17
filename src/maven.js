@@ -13,7 +13,7 @@ async function updateVersion(logger, versionStr, processAllModules) {
 
     await exec(
         'mvn',
-        ['versions:set', '-DgenerateBackupPoms=false', `-DnewVersion=${versionStr}`, ...processAllModulesOption]
+        ['versions:set', '--batch-mode', '-DgenerateBackupPoms=false', `-DnewVersion=${versionStr}`, ...processAllModulesOption]
     );
 }
 
@@ -24,7 +24,7 @@ async function updateSnapshotVersion(logger, processAllModules) {
 
     await exec(
         'mvn',
-        ['versions:set', '-DnextSnapshot=true', '-DgenerateBackupPoms=false', ...processAllModulesOption]
+        ['versions:set', '--batch-mode', '-DnextSnapshot=true', '-DgenerateBackupPoms=false', ...processAllModulesOption]
     );
 }
 
