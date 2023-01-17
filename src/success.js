@@ -17,7 +17,7 @@ module.exports = async function success(pluginConfig, {
 }) {
     const updateSnapshotVersionOpt = pluginConfig.updateSnapshotVersion || false;
     const snapshotCommitMessage = pluginConfig.snapshotCommitMessage || 'chore: setting next snapshot version [skip ci]';
-    const processAllModules = pluginConfig.processAllModules || true;
+    const processAllModules = pluginConfig.processAllModules || false;
 
     if (updateSnapshotVersionOpt) {
         await updateSnapshotVersion(logger, processAllModules);
