@@ -8,5 +8,7 @@ module.exports = async function prepare(pluginConfig, {
 }) {
     logger.log('prepare maven release');
 
-    await updateVersion(logger, nextRelease.version);
+    const processAllModules = pluginConfig.processAllModules || false;
+
+    await updateVersion(logger, nextRelease.version, processAllModules);
 };

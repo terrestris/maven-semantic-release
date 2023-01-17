@@ -17,8 +17,10 @@ module.exports = async function success(pluginConfig, {
 }) {
     const updateSnapshotVersionOpt = pluginConfig.updateSnapshotVersion || false;
     const snapshotCommitMessage = pluginConfig.snapshotCommitMessage || 'chore: setting next snapshot version [skip ci]';
+    const processAllModules = pluginConfig.processAllModules || false;
+
     if (updateSnapshotVersionOpt) {
-        await updateSnapshotVersion(logger);
+        await updateSnapshotVersion(logger, processAllModules);
         const execaOptions = { env, cwd };
         logger.log('Staging pom.xml');
         await add(['pom.xml'], execaOptions);

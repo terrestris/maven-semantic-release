@@ -6,19 +6,25 @@ const SemanticReleaseError = require("@semantic-release/error");
 
 const { exec } = require('./exec');
 
-async function updateVersion(logger, versionStr) {
+async function updateVersion(logger, versionStr, processAllModules) {
     logger.log(`Updating pom.xml to version ${versionStr}`);
+
+    const processAllModulesOption = processAllModules ? ['-DprocessAllModules'] : [];
+
     await exec(
         'mvn',
-        ['versions:set', '-DgenerateBackupPoms=false', `-DnewVersion=${versionStr}`]
+        ['versions:set', '-DgenerateBackupPoms=false', `-DnewVersion=${versionStr}`, ...processAllModulesOption]
     );
 }
 
-async function updateSnapshotVersion(logger) {
+async function updateSnapshotVersion(logger, processAllModules) {
     logger.log(`Update pom.xml to next snapshot version`);
+
+    const processAllModulesOption = processAllModules ? ['-DprocessAllModules'] : [];
+
     await exec(
         'mvn',
-        ['versions:set', '-DnextSnapshot=true', '-DgenerateBackupPoms=false']
+        ['versions:set', '-DnextSnapshot=true', '-DgenerateBackupPoms=false', ...processAllModulesOption]
     );
 }
 
@@ -40,7 +46,7 @@ async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean) {
     try {
         await exec(
           'mvn',
-          [...cleanTarget, ...mavenTarget.split(' '), '-DskipTests', '--settings', settingsPath]
+          [...cleanTarget, ...mavenTarget.split(' '), '--batch-mode', '-DskipTests', '--settings', settingsPath]
         );
     } catch (e) {
         logger.error('failed to deploy to maven');
