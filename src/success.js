@@ -22,9 +22,9 @@ module.exports = async function success(pluginConfig, {
     if (updateSnapshotVersionOpt) {
         await updateSnapshotVersion(logger, processAllModules);
         const execaOptions = { env, cwd };
-        logger.log('Staging pom.xml');
-        await add(['pom.xml'], execaOptions);
-        logger.log('Committing pom.xml');
+        logger.log('Staging all changed pom.xml');
+        await add(['pom.xml', '**/pom.xml'], execaOptions);
+        logger.log('Committing all changed pom.xml');
         await commit(snapshotCommitMessage, execaOptions);
         logger.log('Pushing commit');
         await push(repositoryUrl, branch.name, execaOptions);
