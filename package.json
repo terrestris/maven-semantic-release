@@ -1,6 +1,6 @@
 {
   "name": "@terrestris/maven-semantic-release",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "a very simple maven plugin for semantic release",
   "main": "index.js",
   "scripts": {
