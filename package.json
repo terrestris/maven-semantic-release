@@ -19,7 +19,8 @@
   "dependencies": {
     "@semantic-release/error": "^3.0.0",
     "@semantic-release/git": "^10.0.1",
-    "execa": "^5.1.1"
+    "execa": "^5.1.1",
+    "glob": "^9.2.1"
   },
   "devDependencies": {
     "release-it": "^15.5.1"
