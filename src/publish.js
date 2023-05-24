@@ -12,9 +12,5 @@ module.exports = async function publish(pluginConfig, {
     const mavenTarget = pluginConfig.mavenTarget || 'deploy';
     const clean = pluginConfig.clean || true;
 
-    if (!/^[\w~./]*$/.test(settingsPath)) {
-        throw new Error('config settingsPath contains disallowed characters');
-    }
-
     await deploy(logger, nextRelease.version, mavenTarget, settingsPath, clean);
 };
