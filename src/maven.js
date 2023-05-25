@@ -6,25 +6,25 @@ const SemanticReleaseError = require("@semantic-release/error");
 
 const { exec } = require('./exec');
 
-async function updateVersion(logger, versionStr, processAllModules) {
+async function updateVersion(logger, versionStr, processAllModules, settingsPath) {
     logger.log(`Updating pom.xml to version ${versionStr}`);
 
     const processAllModulesOption = processAllModules ? ['-DprocessAllModules'] : [];
 
     await exec(
         'mvn',
-        ['versions:set', '--batch-mode', '-DgenerateBackupPoms=false', `-DnewVersion=${versionStr}`, ...processAllModulesOption]
+        ['versions:set', '--batch-mode', '-DgenerateBackupPoms=false', '--settings', settingsPath, `-DnewVersion=${versionStr}`, ...processAllModulesOption]
     );
 }
 
-async function updateSnapshotVersion(logger, processAllModules) {
+async function updateSnapshotVersion(logger, processAllModules, settingsPath) {
     logger.log(`Update pom.xml to next snapshot version`);
 
     const processAllModulesOption = processAllModules ? ['-DprocessAllModules'] : [];
 
     await exec(
         'mvn',
-        ['versions:set', '--batch-mode', '-DnextSnapshot=true', '-DgenerateBackupPoms=false', ...processAllModulesOption]
+        ['versions:set', '--batch-mode', '-DnextSnapshot=true', '--settings', settingsPath, '-DgenerateBackupPoms=false', ...processAllModulesOption]
     );
 }
 

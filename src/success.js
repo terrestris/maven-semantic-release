@@ -24,7 +24,12 @@ module.exports = async function success(pluginConfig, {
     const filesToCommit = await glob('**/pom.xml', { ignore: 'node_modules/**' });
 
     if (updateSnapshotVersionOpt) {
-        await updateSnapshotVersion(logger, processAllModules);
+        const settingsPath = pluginConfig.settingsPath || '.m2/settings.xml';
+
+        if (!/^[\w~./-]*$/.test(settingsPath)) {
+            throw new Error('config settingsPath contains disallowed characters');
+        }
+        await updateSnapshotVersion(logger, processAllModules, settingsPath);
         const execaOptions = { env, cwd };
         logger.log('Staging all changed files: ' + filesToCommit.join(", "));
         await add(filesToCommit, execaOptions);
