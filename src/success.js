@@ -21,7 +21,10 @@ module.exports = async function success(pluginConfig, {
     const snapshotCommitMessage = pluginConfig.snapshotCommitMessage || 'chore: setting next snapshot version [skip ci]';
     const processAllModules = pluginConfig.processAllModules || false;
 
-    const filesToCommit = await glob('**/pom.xml', { ignore: 'node_modules/**' });
+    const filesToCommit = await glob('**/pom.xml', {
+        cwd,
+        ignore: 'node_modules/**'
+    });
 
     if (updateSnapshotVersionOpt) {
         const settingsPath = pluginConfig.settingsPath || '.m2/settings.xml';
