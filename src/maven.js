@@ -64,7 +64,7 @@ async function testMvn(logger) {
         )
     } catch (e) {
         logger.error('failed to run mvn');
-        logger.errror(e);
+        logger.error(e);
         throw new SemanticReleaseError('failed to run mvn');
     }
 }
