@@ -46,7 +46,7 @@ async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean) {
     try {
         await exec(
           'mvn',
-          [...cleanTarget, ...mavenTarget.split(' '), '--batch-mode', '-DskipTests', '--settings', settingsPath]
+          [...cleanTarget, ...mavenTarget.split(' '), '--batch-mode', '--no-transfer-progress', '-DskipTests', '--settings', settingsPath]
         );
     } catch (e) {
         logger.error('failed to deploy to maven');
