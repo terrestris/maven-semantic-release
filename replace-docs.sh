@@ -15,7 +15,7 @@ awk -v stdin_content="$stdin_content" '
     while (! /<!-- AUTO_GENERATED_OPTIONS -->/) {
       getline
     }
-    print "<!-- AUTO_GENERATED_OPTIONS -->"
+    print
     next
   }
   {
