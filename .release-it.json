@@ -1,8 +1,5 @@
 {
   "github": {
     "release": true
-  },
-  "hooks": {
-    "before:release": ["npm run doc"]
   }
 }
