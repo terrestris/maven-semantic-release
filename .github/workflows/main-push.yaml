@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - main
-      - auto-generate-docs
 
 jobs:
   docs:
