@@ -6,4 +6,5 @@
  * @property {boolean} [clean=true] Whether the `clean` target will be applied before publishing.
  * @property {boolean} [updateSnapshotVersion=false] Whether a new snapshot version should be set after releasing.
  * @property {string} [snapshotCommitMessage='chore: setting next snapshot version [skip ci]'] The commit message used if a new snapshot version should be created.
+ * @property {boolean} [debug=false] Sets the `-X` option for all maven calls.
  */
