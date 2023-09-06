@@ -4,7 +4,8 @@
   "description": "a very simple maven plugin for semantic release",
   "main": "index.js",
   "scripts": {
-    "release": "release-it"
+    "release": "release-it",
+    "doc": "jsdoc2md src/plugin-config.js | ./replace-docs.sh"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,8 @@
     "glob": "^9.2.1"
   },
   "devDependencies": {
-    "release-it": "^15.5.1"
+    "release-it": "^16.1.5",
+    "jsdoc-to-markdown": "^8.0.0"
   },
   "publishConfig": {
     "access": "public"

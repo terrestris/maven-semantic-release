@@ -21,9 +21,19 @@ Was inspired by https://github.com/conveyal/maven-semantic-release. It differs i
 
 ## Options
 
-* `settingsPath`: path to a maven settings file (default: `'.m2/settings.xml'`)
-* `clean`: either `true` or `false`. Whether the `clean` target will be applied before publishing. (default: `true`)
-* `mavenTarget`: possible values: `deploy`, `package jib:build`, `deploy jib:build`. This determines which mvn targets are used to publish. (default: `'deploy'`)
-* `updateSnapshotVersion`: either `true` or `false`. Whether a new snapshot version should be set after releasing. (default: `false`)
-* `snapshotCommitMessage`: the commit message used if a new snapshot version should be created (default: `'chore: setting next snapshot version [skip ci]'`)
-* `processAllModules`: either `true` or `false`. It sets the `processAllModules` option for the `versions:set` target. This is useful for multimodule projects. (default: `false`)
+<!-- AUTO_GENERATED_OPTIONS -->
+<a name="PluginConfig"></a>
+
+## PluginConfig : <code>Object</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [settingsPath] | <code>string</code> | <code>&quot;&#x27;.m2/settings.xml&#x27;&quot;</code> | Path to a maven settings file. |
+| [processAllModules] | <code>boolean</code> | <code>false</code> | This sets the `processAllModules` option for the `versions:set` target. It is useful for multimodule projects. |
+| [mavenTarget] | <code>&#x27;deploy&#x27;</code> | <code>&#x27;package jib:build&#x27;</code> | <code>&#x27;deploy jib:build&#x27;</code> | <code>&#x27;deploy&#x27;</code> | This determines which mvn targets are used to publish. |
+| [clean] | <code>boolean</code> | <code>true</code> | Whether the `clean` target will be applied before publishing. |
+| [updateSnapshotVersion] | <code>boolean</code> | <code>false</code> | Whether a new snapshot version should be set after releasing. |
+| [snapshotCommitMessage] | <code>string</code> | <code>&quot;&#x27;chore: setting next snapshot version [skip ci]&#x27;&quot;</code> | The commit message used if a new snapshot version should be created. |
+<!-- AUTO_GENERATED_OPTIONS -->

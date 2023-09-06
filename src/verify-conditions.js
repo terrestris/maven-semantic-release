@@ -2,9 +2,13 @@ const {
     testMvn
 } = require("./maven");
 
-module.exports = async function verifyConditions(pluginConfig, context) {
-    const {
-        logger
-    } = context;
+/**
+ * @param {PluginConfig} pluginConfig
+ * @param {Logger} logger
+ * @returns {Promise<void>}
+ */
+module.exports = async function verifyConditions(pluginConfig, {
+    logger
+}) {
     await testMvn(logger);
 };

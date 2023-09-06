@@ -10,6 +10,15 @@ const {
 
 const glob = require("glob");
 
+/**
+ * @param {PluginConfig} pluginConfig
+ * @param {Logger} logger
+ * @param {ProcessEnv} env
+ * @param {string} cwd
+ * @param {string} branch
+ * @param {string} repositoryUrl
+ * @returns {Promise<void>}
+ */
 module.exports = async function success(pluginConfig, {
     logger,
     env,

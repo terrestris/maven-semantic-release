@@ -6,6 +6,13 @@ const SemanticReleaseError = require("@semantic-release/error");
 
 const { exec } = require('./exec');
 
+/**
+ * @param {Logger} logger
+ * @param {string} versionStr
+ * @param {boolean} processAllModules
+ * @param {string} settingsPath
+ * @returns {Promise<void>}
+ */
 async function updateVersion(logger, versionStr, processAllModules, settingsPath) {
     logger.log(`Updating pom.xml to version ${versionStr}`);
 
@@ -28,18 +35,16 @@ async function updateSnapshotVersion(logger, processAllModules, settingsPath) {
     );
 }
 
+/**
+ * @param {Logger} logger
+ * @param {string} nextVersion
+ * @param {string} mavenTarget
+ * @param {string} settingsPath
+ * @param {boolean} clean
+ * @returns {Promise<void>}
+ */
 async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean) {
     logger.log('Deploying version %s with maven', nextVersion);
-
-    const availableTargets = [
-      'deploy',
-      'package jib:build',
-      'deploy jib:build'
-    ];
-
-    if (!availableTargets.includes(mavenTarget)) {
-        throw new Error(`unrecognized maven target ${mavenTarget}`);
-    }
 
     const cleanTarget = clean ? ['clean'] : [];
 
@@ -55,6 +60,10 @@ async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean) {
     }
 }
 
+/**
+ * @param {Logger} logger
+ * @returns {Promise<void>}
+ */
 async function testMvn(logger) {
     logger.log('Testing if mvn exists');
     try {
