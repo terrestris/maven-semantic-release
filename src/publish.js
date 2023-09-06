@@ -17,6 +17,7 @@ module.exports = async function publish(pluginConfig, {
     const settingsPath = pluginConfig.settingsPath || '.m2/settings.xml';
     const mavenTarget = pluginConfig.mavenTarget || 'deploy';
     const clean = pluginConfig.clean || true;
+    const debug = pluginConfig.debug || false;
 
     if (!/^[\w~./-]*$/.test(settingsPath)) {
         throw new Error('config settingsPath contains disallowed characters');
@@ -32,5 +33,5 @@ module.exports = async function publish(pluginConfig, {
         throw new Error(`unrecognized maven target ${mavenTarget}`);
     }
 
-    await deploy(logger, nextRelease.version, mavenTarget, settingsPath, clean);
+    await deploy(logger, nextRelease.version, mavenTarget, settingsPath, clean, debug);
 };

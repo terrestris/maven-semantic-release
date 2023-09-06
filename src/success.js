@@ -29,6 +29,7 @@ module.exports = async function success(pluginConfig, {
     const updateSnapshotVersionOpt = pluginConfig.updateSnapshotVersion || false;
     const snapshotCommitMessage = pluginConfig.snapshotCommitMessage || 'chore: setting next snapshot version [skip ci]';
     const processAllModules = pluginConfig.processAllModules || false;
+    const debug = pluginConfig.debug || false;
 
     const filesToCommit = await glob('**/pom.xml', {
         cwd,
@@ -41,7 +42,7 @@ module.exports = async function success(pluginConfig, {
         if (!/^[\w~./-]*$/.test(settingsPath)) {
             throw new Error('config settingsPath contains disallowed characters');
         }
-        await updateSnapshotVersion(logger, processAllModules, settingsPath);
+        await updateSnapshotVersion(logger, settingsPath, processAllModules, debug);
         const execaOptions = { env, cwd };
         logger.log('Staging all changed files: ' + filesToCommit.join(", "));
         await add(filesToCommit, execaOptions);

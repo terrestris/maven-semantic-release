@@ -9,29 +9,57 @@ const { exec } = require('./exec');
 /**
  * @param {Logger} logger
  * @param {string} versionStr
- * @param {boolean} processAllModules
  * @param {string} settingsPath
+ * @param {boolean} processAllModules
+ * @param {boolean} debug
  * @returns {Promise<void>}
  */
-async function updateVersion(logger, versionStr, processAllModules, settingsPath) {
+async function updateVersion(logger, versionStr, settingsPath, processAllModules, debug) {
     logger.log(`Updating pom.xml to version ${versionStr}`);
 
     const processAllModulesOption = processAllModules ? ['-DprocessAllModules'] : [];
+    const debugOption = debug ? ['-X'] : []
 
     await exec(
         'mvn',
-        ['versions:set', '--batch-mode', '-DgenerateBackupPoms=false', '--settings', settingsPath, `-DnewVersion=${versionStr}`, ...processAllModulesOption]
+        [
+            'versions:set',
+            ...debugOption,
+            '--batch-mode',
+            '-DgenerateBackupPoms=false',
+            '--settings',
+            settingsPath,
+            `-DnewVersion=${versionStr}`,
+            ...processAllModulesOption
+        ]
     );
 }
 
-async function updateSnapshotVersion(logger, processAllModules, settingsPath) {
+/**
+ * @param {Logger} logger
+ * @param {string} settingsPath
+ * @param {boolean} processAllModules
+ * @param {boolean} debug
+ * @returns {Promise<void>}
+ */
+async function updateSnapshotVersion(logger, settingsPath, processAllModules, debug) {
     logger.log(`Update pom.xml to next snapshot version`);
 
     const processAllModulesOption = processAllModules ? ['-DprocessAllModules'] : [];
+    const debugOption = debug ? ['-X'] : []
 
     await exec(
         'mvn',
-        ['versions:set', '--batch-mode', '-DnextSnapshot=true', '--settings', settingsPath, '-DgenerateBackupPoms=false', ...processAllModulesOption]
+        [
+            'versions:set',
+            ...debugOption,
+            '--batch-mode',
+            '-DnextSnapshot=true',
+            '--settings',
+            settingsPath,
+            '-DgenerateBackupPoms=false',
+            ...processAllModulesOption
+        ]
     );
 }
 
@@ -41,17 +69,27 @@ async function updateSnapshotVersion(logger, processAllModules, settingsPath) {
  * @param {string} mavenTarget
  * @param {string} settingsPath
  * @param {boolean} clean
+ * @param {boolean} debug
  * @returns {Promise<void>}
  */
-async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean) {
+async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean, debug) {
     logger.log('Deploying version %s with maven', nextVersion);
 
-    const cleanTarget = clean ? ['clean'] : [];
+    const cleanOption = clean ? ['clean'] : [];
+    const debugOption = debug ? ['-X'] : []
 
     try {
         await exec(
           'mvn',
-          [...cleanTarget, ...mavenTarget.split(' '), '--batch-mode', '-DskipTests', '--settings', settingsPath]
+          [
+              ...cleanOption,
+              ...mavenTarget.split(' '),
+              ...debugOption,
+              '--batch-mode',
+              '-DskipTests',
+              '--settings',
+              settingsPath
+          ]
         );
     } catch (e) {
         logger.error('failed to deploy to maven');
