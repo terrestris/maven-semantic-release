@@ -6,7 +6,11 @@ It has an option to increase the version after release to the next snapshot vers
 
 It only assures that the `mvn` command exists.
 
-Was inspired by https://github.com/conveyal/maven-semantic-release.
+Was inspired by https://github.com/conveyal/maven-semantic-release. It differs in some ways. It …
+* … allows different maven targets.
+* … has an option to allow multimodule projects
+* … can increase a snapshot version after a successful release
+* … has fewer checks to verify th integrity of the setup (does not check `pom.xml`)
 
 ## Getting started
 
