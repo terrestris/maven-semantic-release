@@ -36,4 +36,5 @@ Was inspired by https://github.com/conveyal/maven-semantic-release. It differs i
 | [clean] | <code>boolean</code> | <code>true</code> | Whether the `clean` target will be applied before publishing. |
 | [updateSnapshotVersion] | <code>boolean</code> | <code>false</code> | Whether a new snapshot version should be set after releasing. |
 | [snapshotCommitMessage] | <code>string</code> | <code>&quot;&#x27;chore: setting next snapshot version [skip ci]&#x27;&quot;</code> | The commit message used if a new snapshot version should be created. |
+| [debug] | <code>boolean</code> | <code>false</code> | Sets the `-X` option for all maven calls. |
 <!-- AUTO_GENERATED_OPTIONS -->
