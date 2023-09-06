@@ -86,6 +86,7 @@ async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean, deb
               ...mavenTarget.split(' '),
               ...debugOption,
               '--batch-mode',
+              '--no-transfer-progress',
               '-DskipTests',
               '--settings',
               settingsPath
