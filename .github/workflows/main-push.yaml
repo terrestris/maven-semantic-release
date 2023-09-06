@@ -15,5 +15,5 @@ jobs:
       - run: |
           git config --global user.name 'terrestris'
           git config --global user.email 'terrestris@users.noreply.github.com'
-          git diff --quiet && git commit -am "chore: automated doc generation" || true
+          git diff --quiet || git commit -am "chore: automated doc generation"
           git push
