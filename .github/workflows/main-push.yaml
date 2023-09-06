@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+      - main
+      - auto-generate-docs
+
+jobs:
+  docs:
+    name: docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+      - run: npm ci
+      - run: npm run doc
+      - run: |
+          git config --global user.name 'terrestris'
+          git config --global user.email 'terrestris@users.noreply.github.com'
+          git commit -am "chore: automated doc generation"
+          git push

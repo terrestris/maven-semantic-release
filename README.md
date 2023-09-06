@@ -15,4 +15,7 @@ Was inspired by https://github.com/conveyal/maven-semantic-release.
 * Configure `settingsPath` or ensure that a maven settings file exists at the expected location
 * Make sure that the `@semantic-release/git` plugin runs after this plugin and includes the `pom.xml` if you want to use it.
 
-## [Options](OPTIONS.md)
+## Options
+
+<!-- AUTO_GENERATED_OPTIONS -->
+<!-- AUTO_GENERATED_OPTIONS -->

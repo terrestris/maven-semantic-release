@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "release": "release-it",
-    "doc": "jsdoc2md src/plugin-config.js >> OPTIONS.md"
+    "doc": "jsdoc2md src/plugin-config.js | ./replace-docs.sh"
   },
   "repository": {
     "type": "git",
