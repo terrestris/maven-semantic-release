@@ -37,7 +37,7 @@ module.exports = async function success(pluginConfig, {
     });
 
     if (updateSnapshotVersionOpt) {
-        const settingsPath = pluginConfig.settingsPath || '.m2/settings.xml';
+        const settingsPath = pluginConfig.settingsPath || '~/.m2/settings.xml';
 
         if (!/^[\w~./-]*$/.test(settingsPath)) {
             throw new Error('config settingsPath contains disallowed characters');
