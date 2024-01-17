@@ -14,7 +14,7 @@ module.exports = async function publish(pluginConfig, {
 }) {
     logger.log('publish mvn release');
 
-    const settingsPath = pluginConfig.settingsPath || '.m2/settings.xml';
+    const settingsPath = pluginConfig.settingsPath || '~/.m2/settings.xml';
     const mavenTarget = pluginConfig.mavenTarget || 'deploy';
     const clean = pluginConfig.clean || true;
     const debug = pluginConfig.debug || false;
