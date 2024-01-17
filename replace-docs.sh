@@ -4,7 +4,7 @@
 file_to_modify="README.md"
 
 # Read the stdin content into a variable
-stdin_content=$(cat -)
+stdin_content=$(cat - | sed 's/\\/\\\\/g')
 
 # Use awk to replace the content between <!-- AUTOGEN --> with stdin_content
 awk -v stdin_content="$stdin_content" '
