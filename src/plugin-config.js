@@ -7,6 +7,7 @@
  * @property {boolean} [updateSnapshotVersion=false] Whether a new snapshot version should be set after releasing.
  * @property {string} [snapshotCommitMessage='chore: setting next snapshot version [skip ci]'] The commit message used if a new snapshot version should be created.
  * @property {boolean} [debug=false] Sets the `-X` option for all maven calls.
+ * @property {boolean} [mvnw=false] Use the mvnw script instead of mvn
  */
 
 /**
@@ -20,7 +21,8 @@ function evaluateConfig(config) {
         clean: true,
         updateSnapshotVersion: false,
         snapshotCommitMessage: 'chore: setting next snapshot version [skip ci]',
-        debug: false
+        debug: false,
+        mvnw: false
     }, config);
 
     if (!/^[\w~./-]*$/.test(withDefaults.settingsPath)) {

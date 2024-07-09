@@ -22,8 +22,9 @@ module.exports = async function publish(pluginConfig, {
         settingsPath,
         mavenTarget,
         clean,
-        debug
+        debug,
+        mvnw
     } = evaluateConfig(pluginConfig);
 
-    await deploy(logger, nextRelease.version, mavenTarget, settingsPath, clean, debug);
+    await deploy(logger, mvnw, nextRelease.version, mavenTarget, settingsPath, clean, debug);
 };
