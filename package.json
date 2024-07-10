@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "release": "release-it",
-    "doc": "jsdoc2md src/plugin-config.js | ./replace-docs.sh"
+    "doc": "jsdoc2md src/plugin-config.js | ./replace-docs.sh",
+    "typecheck": "tsc --pretty --noEmit true --emitDeclarationOnly false"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,11 @@
     "glob": "^9.2.1"
   },
   "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@types/semantic-release__error": "^3.0.3",
+    "jsdoc-to-markdown": "^8.0.0",
     "release-it": "^16.1.5",
-    "jsdoc-to-markdown": "^8.0.0"
+    "typescript": "^5.5.3"
   },
   "publishConfig": {
     "access": "public"

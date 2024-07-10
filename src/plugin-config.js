@@ -1,14 +1,20 @@
 /**
+ * @typedef {'deploy'|'package jib:build'|'deploy jib:build'} MavenTarget
+ */
+
+/**
  * @typedef {Object} PluginConfig
  * @property {string} [settingsPath] Path to a maven settings file.
- * @property {boolean} [processAllModules=false] This sets the `processAllModules` option for the `versions:set` target. It is useful for multimodule projects.
- * @property {'deploy'|'package jib:build'|'deploy jib:build'} [mavenTarget='deploy'] This determines which mvn targets are used to publish.
- * @property {boolean} [clean=true] Whether the `clean` target will be applied before publishing.
- * @property {boolean} [updateSnapshotVersion=false] Whether a new snapshot version should be set after releasing.
- * @property {string} [snapshotCommitMessage='chore: setting next snapshot version [skip ci]'] The commit message used if a new snapshot version should be created.
- * @property {boolean} [debug=false] Sets the `-X` option for all maven calls.
- * @property {boolean} [mvnw=false] Use the mvnw script instead of mvn
+ * @property {boolean} processAllModules=false This sets the `processAllModules` option for the `versions:set` target. It is useful for multimodule projects.
+ * @property {MavenTarget} mavenTarget='deploy' This determines which mvn targets are used to publish.
+ * @property {boolean} clean=true Whether the `clean` target will be applied before publishing.
+ * @property {boolean} updateSnapshotVersion=false Whether a new snapshot version should be set after releasing.
+ * @property {string} snapshotCommitMessage='chore: setting next snapshot version [skip ci]' The commit message used if a new snapshot version should be created.
+ * @property {boolean} debug=false Sets the `-X` option for all maven calls.
+ * @property {boolean} mvnw=false Use the mvnw script instead of mvn
  */
+
+const SemanticReleaseError = require("@semantic-release/error");
 
 /**
  * @param {Partial<PluginConfig>} config
@@ -25,8 +31,8 @@ function evaluateConfig(config) {
         mvnw: false
     }, config);
 
-    if (!/^[\w~./-]*$/.test(withDefaults.settingsPath)) {
-        throw new Error('config settingsPath contains disallowed characters');
+    if (withDefaults.settingsPath && !/^[\w~./-]*$/.test(withDefaults.settingsPath)) {
+        throw new SemanticReleaseError('Config settingsPath contains disallowed characters');
     }
 
     const availableTargets = [
@@ -36,7 +42,7 @@ function evaluateConfig(config) {
     ];
 
     if (!availableTargets.includes(withDefaults.mavenTarget)) {
-        throw new Error(`unrecognized maven target ${withDefaults.mavenTarget}`);
+        throw new SemanticReleaseError(`Unrecognized maven target ${withDefaults.mavenTarget}`);
     }
 
     return withDefaults;
