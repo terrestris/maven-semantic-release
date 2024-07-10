@@ -23,20 +23,22 @@ function settingsOption(settingsPath) {
 
 /**
  * @param {Logger} logger
+ * @param {boolean} mvnw
  * @param {string} versionStr
  * @param {string|undefined} settingsPath
  * @param {boolean} processAllModules
  * @param {boolean} debug
  * @returns {Promise<void>}
  */
-async function updateVersion(logger, versionStr, settingsPath, processAllModules, debug) {
+async function updateVersion(logger, mvnw, versionStr, settingsPath, processAllModules, debug) {
     logger.log(`Updating pom.xml to version ${versionStr}`);
 
+    const command = mvnw ? './mvnw' : 'mvn';
     const processAllModulesOption = processAllModules ? ['-DprocessAllModules'] : [];
     const debugOption = debug ? ['-X'] : []
 
     await exec(
-        'mvn',
+        command,
         [
             'versions:set',
             ...debugOption,
@@ -52,19 +54,21 @@ async function updateVersion(logger, versionStr, settingsPath, processAllModules
 
 /**
  * @param {Logger} logger
+ * @param {boolean} mvnw
  * @param {string|undefined} settingsPath
  * @param {boolean} processAllModules
  * @param {boolean} debug
  * @returns {Promise<void>}
  */
-async function updateSnapshotVersion(logger, settingsPath, processAllModules, debug) {
+async function updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug) {
     logger.log(`Update pom.xml to next snapshot version`);
 
+    const command = mvnw ? './mvnw' : 'mvn';
     const processAllModulesOption = processAllModules ? ['-DprocessAllModules'] : [];
     const debugOption = debug ? ['-X'] : []
 
     await exec(
-        'mvn',
+        command,
         [
             'versions:set',
             ...debugOption,
@@ -80,6 +84,7 @@ async function updateSnapshotVersion(logger, settingsPath, processAllModules, de
 
 /**
  * @param {Logger} logger
+ * @param {boolean} mvnw
  * @param {string} nextVersion
  * @param {string} mavenTarget
  * @param {string|undefined} settingsPath
@@ -87,15 +92,16 @@ async function updateSnapshotVersion(logger, settingsPath, processAllModules, de
  * @param {boolean} debug
  * @returns {Promise<void>}
  */
-async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean, debug) {
+async function deploy(logger, mvnw, nextVersion, mavenTarget, settingsPath, clean, debug) {
     logger.log('Deploying version %s with maven', nextVersion);
 
+    const command = mvnw ? './mvnw' : 'mvn';
     const cleanOption = clean ? ['clean'] : [];
     const debugOption = debug ? ['-X'] : []
 
     try {
         await exec(
-          'mvn',
+          command,
           [
               ...cleanOption,
               ...mavenTarget.split(' '),
@@ -115,13 +121,17 @@ async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean, deb
 
 /**
  * @param {Logger} logger
+ * @param {boolean} mvnw
  * @returns {Promise<void>}
  */
-async function testMvn(logger) {
+async function testMvn(logger, mvnw) {
     logger.log('Testing if mvn exists');
+
+    const command = mvnw ? './mvnw' : 'mvn';
+
     try {
         await exec(
-            'mvn',
+            command,
             ['-v']
         )
     } catch (e) {

@@ -35,7 +35,8 @@ module.exports = async function success(pluginConfig, {
         snapshotCommitMessage,
         processAllModules,
         debug,
-        settingsPath
+        settingsPath,
+        mvnw
     } = evaluateConfig(pluginConfig)
 
     const filesToCommit = await glob('**/pom.xml', {
@@ -44,7 +45,7 @@ module.exports = async function success(pluginConfig, {
     });
 
     if (updateSnapshotVersionOpt) {
-        await updateSnapshotVersion(logger, settingsPath, processAllModules, debug);
+        await updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug);
         const execaOptions = { env, cwd };
         logger.log('Staging all changed files: ' + filesToCommit.join(", "));
         await add(filesToCommit, execaOptions);
