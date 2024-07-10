@@ -3,6 +3,10 @@ const {
 } = require("./maven");
 
 const {
+    evaluateConfig
+} = require('./plugin-config');
+
+const {
     add,
     commit,
     push
@@ -26,10 +30,13 @@ module.exports = async function success(pluginConfig, {
     branch,
     options: { repositoryUrl }
 }) {
-    const updateSnapshotVersionOpt = pluginConfig.updateSnapshotVersion || false;
-    const snapshotCommitMessage = pluginConfig.snapshotCommitMessage || 'chore: setting next snapshot version [skip ci]';
-    const processAllModules = pluginConfig.processAllModules || false;
-    const debug = pluginConfig.debug || false;
+    const {
+        updateSnapshotVersion: updateSnapshotVersionOpt,
+        snapshotCommitMessage,
+        processAllModules,
+        debug,
+        settingsPath
+    } = evaluateConfig(pluginConfig)
 
     const filesToCommit = await glob('**/pom.xml', {
         cwd,
@@ -37,11 +44,6 @@ module.exports = async function success(pluginConfig, {
     });
 
     if (updateSnapshotVersionOpt) {
-        const settingsPath = pluginConfig.settingsPath || '~/.m2/settings.xml';
-
-        if (!/^[\w~./-]*$/.test(settingsPath)) {
-            throw new Error('config settingsPath contains disallowed characters');
-        }
         await updateSnapshotVersion(logger, settingsPath, processAllModules, debug);
         const execaOptions = { env, cwd };
         logger.log('Staging all changed files: ' + filesToCommit.join(", "));

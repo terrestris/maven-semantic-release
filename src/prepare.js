@@ -2,6 +2,10 @@ const {
     updateVersion
 } = require("./maven");
 
+const {
+    evaluateConfig
+} = require('./plugin-config');
+
 /**
  * @param {PluginConfig} pluginConfig
  * @param {Logger} logger
@@ -14,14 +18,11 @@ module.exports = async function prepare(pluginConfig, {
 }) {
     logger.log('prepare maven release');
 
-    const settingsPath = pluginConfig.settingsPath || '~/.m2/settings.xml';
-
-    if (!/^[\w~./-]*$/.test(settingsPath)) {
-        throw new Error('config settingsPath contains disallowed characters');
-    }
-
-    const processAllModules = pluginConfig.processAllModules || false;
-    const debug = pluginConfig.debug || false;
+    const {
+        settingsPath,
+        processAllModules,
+        debug
+    } = evaluateConfig(pluginConfig);
 
     await updateVersion(logger, nextRelease.version, settingsPath, processAllModules, debug);
 };

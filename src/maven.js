@@ -7,9 +7,24 @@ const SemanticReleaseError = require("@semantic-release/error");
 const { exec } = require('./exec');
 
 /**
+ * @param {string|undefined} settingsPath
+ * @returns {string[]}
+ */
+function settingsOption(settingsPath) {
+    if (settingsPath) {
+        return [
+            '--settings',
+            settingsPath
+        ];
+    } else {
+        return [];
+    }
+}
+
+/**
  * @param {Logger} logger
  * @param {string} versionStr
- * @param {string} settingsPath
+ * @param {string|undefined} settingsPath
  * @param {boolean} processAllModules
  * @param {boolean} debug
  * @returns {Promise<void>}
@@ -28,8 +43,7 @@ async function updateVersion(logger, versionStr, settingsPath, processAllModules
             '--batch-mode',
             '--no-transfer-progress',
             '-DgenerateBackupPoms=false',
-            '--settings',
-            settingsPath,
+            ...settingsOption(settingsPath),
             `-DnewVersion=${versionStr}`,
             ...processAllModulesOption
         ]
@@ -38,7 +52,7 @@ async function updateVersion(logger, versionStr, settingsPath, processAllModules
 
 /**
  * @param {Logger} logger
- * @param {string} settingsPath
+ * @param {string|undefined} settingsPath
  * @param {boolean} processAllModules
  * @param {boolean} debug
  * @returns {Promise<void>}
@@ -57,8 +71,7 @@ async function updateSnapshotVersion(logger, settingsPath, processAllModules, de
             '--batch-mode',
             '--no-transfer-progress',
             '-DnextSnapshot=true',
-            '--settings',
-            settingsPath,
+            ...settingsOption(settingsPath),
             '-DgenerateBackupPoms=false',
             ...processAllModulesOption
         ]
@@ -69,7 +82,7 @@ async function updateSnapshotVersion(logger, settingsPath, processAllModules, de
  * @param {Logger} logger
  * @param {string} nextVersion
  * @param {string} mavenTarget
- * @param {string} settingsPath
+ * @param {string|undefined} settingsPath
  * @param {boolean} clean
  * @param {boolean} debug
  * @returns {Promise<void>}
@@ -90,8 +103,7 @@ async function deploy(logger, nextVersion, mavenTarget, settingsPath, clean, deb
               '--batch-mode',
               '--no-transfer-progress',
               '-DskipTests',
-              '--settings',
-              settingsPath
+              ...settingsOption(settingsPath)
           ]
         );
     } catch (e) {

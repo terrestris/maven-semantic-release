@@ -2,6 +2,10 @@ const {
     deploy
 } = require("./maven");
 
+const {
+    evaluateConfig
+} = require('./plugin-config');
+
 /**
  * @param {PluginConfig} pluginConfig
  * @param {Logger} logger
@@ -14,24 +18,12 @@ module.exports = async function publish(pluginConfig, {
 }) {
     logger.log('publish mvn release');
 
-    const settingsPath = pluginConfig.settingsPath || '~/.m2/settings.xml';
-    const mavenTarget = pluginConfig.mavenTarget || 'deploy';
-    const clean = pluginConfig.clean !== false;
-    const debug = pluginConfig.debug === true;
-
-    if (!/^[\w~./-]*$/.test(settingsPath)) {
-        throw new Error('config settingsPath contains disallowed characters');
-    }
-
-    const availableTargets = [
-        'deploy',
-        'package jib:build',
-        'deploy jib:build'
-    ];
-
-    if (!availableTargets.includes(mavenTarget)) {
-        throw new Error(`unrecognized maven target ${mavenTarget}`);
-    }
+    const {
+        settingsPath,
+        mavenTarget,
+        clean,
+        debug
+    } = evaluateConfig(pluginConfig);
 
     await deploy(logger, nextRelease.version, mavenTarget, settingsPath, clean, debug);
 };
