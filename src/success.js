@@ -12,15 +12,12 @@ const {
     push
 } = require('@semantic-release/git/lib/git');
 
-const glob = require("glob");
+const { glob } = require("glob");
+const SemanticReleaseError = require("@semantic-release/error");
 
 /**
- * @param {PluginConfig} pluginConfig
- * @param {Logger} logger
- * @param {ProcessEnv} env
- * @param {string} cwd
- * @param {string} branch
- * @param {string} repositoryUrl
+ * @param {import("./plugin-config").PluginConfig} pluginConfig
+ * @param {import("semantic-release").Context & { cwd: string }} context
  * @returns {Promise<void>}
  */
 module.exports = async function success(pluginConfig, {
@@ -28,7 +25,7 @@ module.exports = async function success(pluginConfig, {
     env,
     cwd,
     branch,
-    options: { repositoryUrl }
+    options
 }) {
     const {
         updateSnapshotVersion: updateSnapshotVersionOpt,
@@ -39,19 +36,26 @@ module.exports = async function success(pluginConfig, {
         mvnw
     } = evaluateConfig(pluginConfig)
 
+    if (!updateSnapshotVersionOpt) {
+        return;
+    }
+
+    await updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug);
+    if (!options?.repositoryUrl) {
+        logger.log('No git repository url configured. No files are commited.');
+        return;
+    }
+
     const filesToCommit = await glob('**/pom.xml', {
         cwd,
         ignore: 'node_modules/**'
     });
 
-    if (updateSnapshotVersionOpt) {
-        await updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug);
-        const execaOptions = { env, cwd };
-        logger.log('Staging all changed files: ' + filesToCommit.join(", "));
-        await add(filesToCommit, execaOptions);
-        logger.log('Committing all changed pom.xml');
-        await commit(snapshotCommitMessage, execaOptions);
-        logger.log('Pushing commit');
-        await push(repositoryUrl, branch.name, execaOptions);
-    }
+    const execaOptions = {env, cwd};
+    logger.log('Staging all changed files: ' + filesToCommit.join(", "));
+    await add(filesToCommit, execaOptions);
+    logger.log('Committing all changed pom.xml');
+    await commit(snapshotCommitMessage, execaOptions);
+    logger.log('Pushing commit');
+    await push(options.repositoryUrl, branch.name, execaOptions);
 };

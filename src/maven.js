@@ -37,19 +37,25 @@ async function updateVersion(logger, mvnw, versionStr, settingsPath, processAllM
     const processAllModulesOption = processAllModules ? ['-DprocessAllModules'] : [];
     const debugOption = debug ? ['-X'] : []
 
-    await exec(
-        command,
-        [
-            'versions:set',
-            ...debugOption,
-            '--batch-mode',
-            '--no-transfer-progress',
-            '-DgenerateBackupPoms=false',
-            ...settingsOption(settingsPath),
-            `-DnewVersion=${versionStr}`,
-            ...processAllModulesOption
-        ]
-    );
+    try {
+        await exec(
+            command,
+            [
+                'versions:set',
+                ...debugOption,
+                '--batch-mode',
+                '--no-transfer-progress',
+                '-DgenerateBackupPoms=false',
+                ...settingsOption(settingsPath),
+                `-DnewVersion=${versionStr}`,
+                ...processAllModulesOption
+            ]
+        );
+    } catch (e) {
+        logger.error('Failed to update version');
+        logger.error(/** @type {Error} */(e));
+        throw new SemanticReleaseError('Failed to update version');
+    }
 }
 
 /**
@@ -67,33 +73,39 @@ async function updateSnapshotVersion(logger, mvnw, settingsPath, processAllModul
     const processAllModulesOption = processAllModules ? ['-DprocessAllModules'] : [];
     const debugOption = debug ? ['-X'] : []
 
-    await exec(
-        command,
-        [
-            'versions:set',
-            ...debugOption,
-            '--batch-mode',
-            '--no-transfer-progress',
-            '-DnextSnapshot=true',
-            ...settingsOption(settingsPath),
-            '-DgenerateBackupPoms=false',
-            ...processAllModulesOption
-        ]
-    );
+    try {
+        await exec(
+            command,
+            [
+                'versions:set',
+                ...debugOption,
+                '--batch-mode',
+                '--no-transfer-progress',
+                '-DnextSnapshot=true',
+                ...settingsOption(settingsPath),
+                '-DgenerateBackupPoms=false',
+                ...processAllModulesOption
+            ]
+        );
+    } catch (e) {
+        logger.error('Failed to update snapshot version');
+        logger.error(/** @type {Error} */(e));
+        throw new SemanticReleaseError('Failed to update snapshot version');
+    }
 }
 
 /**
  * @param {Logger} logger
  * @param {boolean} mvnw
  * @param {string} nextVersion
- * @param {string} mavenTarget
+ * @param {import("./plugin-config").MavenTarget} mavenTarget
  * @param {string|undefined} settingsPath
  * @param {boolean} clean
  * @param {boolean} debug
  * @returns {Promise<void>}
  */
 async function deploy(logger, mvnw, nextVersion, mavenTarget, settingsPath, clean, debug) {
-    logger.log('Deploying version %s with maven', nextVersion);
+    logger.log(`Deploying version ${nextVersion} with maven`);
 
     const command = mvnw ? './mvnw' : 'mvn';
     const cleanOption = clean ? ['clean'] : [];
@@ -113,9 +125,9 @@ async function deploy(logger, mvnw, nextVersion, mavenTarget, settingsPath, clea
           ]
         );
     } catch (e) {
-        logger.error('failed to deploy to maven');
-        logger.error(e);
-        throw new SemanticReleaseError('failed to deploy to maven');
+        logger.error('Failed to deploy to maven');
+        logger.error(/** @type {Error} */(e));
+        throw new SemanticReleaseError('Failed to deploy to maven');
     }
 }
 
@@ -135,9 +147,9 @@ async function testMvn(logger, mvnw) {
             ['-v']
         )
     } catch (e) {
-        logger.error('failed to run mvn');
-        logger.error(e);
-        throw new SemanticReleaseError('failed to run mvn');
+        logger.error('Failed to run mvn');
+        logger.error(/** @type {Error} */(e));
+        throw new SemanticReleaseError('Failed to run mvn');
     }
 }
 

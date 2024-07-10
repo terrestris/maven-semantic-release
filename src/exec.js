@@ -1,9 +1,13 @@
 const execa = require('execa');
 
-function exec() {
-    const childProcess = execa(...arguments);
-    childProcess.stdout.pipe(process.stdout);
-    childProcess.stderr.pipe(process.stderr);
+/**
+ * @param {string} file
+ * @param {string[]} options
+ */
+function exec(file, options) {
+    const childProcess = execa(file, options);
+    childProcess.stdout?.pipe(process.stdout);
+    childProcess.stderr?.pipe(process.stderr);
     return childProcess;
 }
 
