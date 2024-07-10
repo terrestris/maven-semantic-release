@@ -6,6 +6,7 @@
   "scripts": {
     "release": "release-it",
     "doc": "jsdoc2md src/plugin-config.js | ./replace-docs.sh",
+    "check": "npm run typecheck",
     "typecheck": "tsc --pretty --noEmit true --emitDeclarationOnly false"
   },
   "repository": {
