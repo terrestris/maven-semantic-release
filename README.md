@@ -32,6 +32,8 @@ Was inspired by https://github.com/conveyal/maven-semantic-release. It differs i
 ## Typedefs
 
 <dl>
+<dt><a href="#MavenTarget">MavenTarget</a> : <code>&#x27;deploy&#x27;</code> | <code>&#x27;package jib:build&#x27;</code> | <code>&#x27;deploy jib:build&#x27;</code></dt>
+<dd></dd>
 <dt><a href="#PluginConfig">PluginConfig</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
@@ -45,6 +47,10 @@ Was inspired by https://github.com/conveyal/maven-semantic-release. It differs i
 | --- | --- |
 | config | [<code>Partial.&lt;PluginConfig&gt;</code>](#PluginConfig) | 
 
+<a name="MavenTarget"></a>
+
+## MavenTarget : <code>&#x27;deploy&#x27;</code> \| <code>&#x27;package jib:build&#x27;</code> \| <code>&#x27;deploy jib:build&#x27;</code>
+**Kind**: global typedef  
 <a name="PluginConfig"></a>
 
 ## PluginConfig : <code>Object</code>
@@ -54,11 +60,11 @@ Was inspired by https://github.com/conveyal/maven-semantic-release. It differs i
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | [settingsPath] | <code>string</code> |  | Path to a maven settings file. |
-| [processAllModules] | <code>boolean</code> | <code>false</code> | This sets the `processAllModules` option for the `versions:set` target. It is useful for multimodule projects. |
-| [mavenTarget] | <code>&#x27;deploy&#x27;</code> \| <code>&#x27;package jib:build&#x27;</code> \| <code>&#x27;deploy jib:build&#x27;</code> | <code>&#x27;deploy&#x27;</code> | This determines which mvn targets are used to publish. |
-| [clean] | <code>boolean</code> | <code>true</code> | Whether the `clean` target will be applied before publishing. |
-| [updateSnapshotVersion] | <code>boolean</code> | <code>false</code> | Whether a new snapshot version should be set after releasing. |
-| [snapshotCommitMessage] | <code>string</code> | <code>&quot;&#x27;chore: setting next snapshot version [skip ci]&#x27;&quot;</code> | The commit message used if a new snapshot version should be created. |
-| [debug] | <code>boolean</code> | <code>false</code> | Sets the `-X` option for all maven calls. |
-| [mvnw] | <code>boolean</code> | <code>false</code> | Use the mvnw script instead of mvn |
+| processAllModules | <code>boolean</code> | <code>false</code> | This sets the `processAllModules` option for the `versions:set` target. It is useful for multimodule projects. |
+| mavenTarget | [<code>MavenTarget</code>](#MavenTarget) | <code>&#x27;deploy&#x27;</code> | This determines which mvn targets are used to publish. |
+| clean | <code>boolean</code> | <code>true</code> | Whether the `clean` target will be applied before publishing. |
+| updateSnapshotVersion | <code>boolean</code> | <code>false</code> | Whether a new snapshot version should be set after releasing. |
+| snapshotCommitMessage | <code>string</code> | <code>&quot;&#x27;chore:&quot;</code> | setting next snapshot version [skip ci]' The commit message used if a new snapshot version should be created. |
+| debug | <code>boolean</code> | <code>false</code> | Sets the `-X` option for all maven calls. |
+| mvnw | <code>boolean</code> | <code>false</code> | Use the mvnw script instead of mvn |
 <!-- AUTO_GENERATED_OPTIONS -->
