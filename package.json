@@ -4,7 +4,7 @@
   "description": "a very simple maven plugin for semantic release",
   "main": "index.js",
   "scripts": {
-    "check": "npm run typecheck && npm run jest",
+    "check": "npm run typecheck && npm test",
     "doc": "jsdoc2md src/plugin-config.js | ./replace-docs.sh",
     "test": "jest",
     "typecheck": "tsc --pretty --noEmit true --emitDeclarationOnly false",
