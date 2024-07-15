@@ -22,13 +22,6 @@ Was inspired by https://github.com/conveyal/maven-semantic-release. It differs i
 ## Options
 
 <!-- AUTO_GENERATED_OPTIONS -->
-## Functions
-
-<dl>
-<dt><a href="#evaluateConfig">evaluateConfig(config)</a> ⇒ <code><a href="#PluginConfig">PluginConfig</a></code></dt>
-<dd></dd>
-</dl>
-
 ## Typedefs
 
 <dl>
@@ -37,15 +30,6 @@ Was inspired by https://github.com/conveyal/maven-semantic-release. It differs i
 <dt><a href="#PluginConfig">PluginConfig</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
-
-<a name="evaluateConfig"></a>
-
-## evaluateConfig(config) ⇒ [<code>PluginConfig</code>](#PluginConfig)
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| config | [<code>Partial.&lt;PluginConfig&gt;</code>](#PluginConfig) | 
 
 <a name="MavenTarget"></a>
 
