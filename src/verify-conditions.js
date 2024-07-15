@@ -8,7 +8,7 @@ const {
 
 /**
  * @param {import("./plugin-config").PluginConfig} pluginConfig
- * @param {{ logger: Logger}} params
+ * @param {{ logger: Logger }} params
  * @returns {Promise<void>}
  */
 module.exports = async function verifyConditions(pluginConfig, {

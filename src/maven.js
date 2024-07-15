@@ -9,6 +9,7 @@ const { exec } = require('./exec');
 /**
  * @param {string|undefined} settingsPath
  * @returns {string[]}
+ * @private
  */
 function settingsOption(settingsPath) {
     if (settingsPath) {
@@ -29,6 +30,7 @@ function settingsOption(settingsPath) {
  * @param {boolean} processAllModules
  * @param {boolean} debug
  * @returns {Promise<void>}
+ * @private
  */
 async function updateVersion(logger, mvnw, versionStr, settingsPath, processAllModules, debug) {
     logger.log(`Updating pom.xml to version ${versionStr}`);
@@ -65,6 +67,7 @@ async function updateVersion(logger, mvnw, versionStr, settingsPath, processAllM
  * @param {boolean} processAllModules
  * @param {boolean} debug
  * @returns {Promise<void>}
+ * @private
  */
 async function updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug) {
     logger.log('Update pom.xml to next snapshot version');
@@ -103,6 +106,7 @@ async function updateSnapshotVersion(logger, mvnw, settingsPath, processAllModul
  * @param {boolean} clean
  * @param {boolean} debug
  * @returns {Promise<void>}
+ * @private
  */
 async function deploy(logger, mvnw, nextVersion, mavenTarget, settingsPath, clean, debug) {
     logger.log(`Deploying version ${nextVersion} with maven`);
@@ -135,6 +139,7 @@ async function deploy(logger, mvnw, nextVersion, mavenTarget, settingsPath, clea
  * @param {Logger} logger
  * @param {boolean} mvnw
  * @returns {Promise<void>}
+ * @private
  */
 async function testMvn(logger, mvnw) {
     logger.log('Testing if mvn exists');

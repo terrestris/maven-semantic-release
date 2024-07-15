@@ -5,6 +5,7 @@ const {
 const {
     evaluateConfig
 } = require('./plugin-config');
+
 const SemanticReleaseError = require("@semantic-release/error");
 
 /**
