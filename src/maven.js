@@ -42,11 +42,11 @@ async function updateVersion(logger, mvnw, versionStr, settingsPath, processAllM
             command,
             [
                 'versions:set',
+                ...settingsOption(settingsPath),
                 ...debugOption,
                 '--batch-mode',
                 '--no-transfer-progress',
                 '-DgenerateBackupPoms=false',
-                ...settingsOption(settingsPath),
                 `-DnewVersion=${versionStr}`,
                 ...processAllModulesOption
             ]
@@ -67,7 +67,7 @@ async function updateVersion(logger, mvnw, versionStr, settingsPath, processAllM
  * @returns {Promise<void>}
  */
 async function updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug) {
-    logger.log(`Update pom.xml to next snapshot version`);
+    logger.log('Update pom.xml to next snapshot version');
 
     const command = mvnw ? './mvnw' : 'mvn';
     const processAllModulesOption = processAllModules ? ['-DprocessAllModules'] : [];
@@ -78,11 +78,11 @@ async function updateSnapshotVersion(logger, mvnw, settingsPath, processAllModul
             command,
             [
                 'versions:set',
+                ...settingsOption(settingsPath),
                 ...debugOption,
                 '--batch-mode',
                 '--no-transfer-progress',
                 '-DnextSnapshot=true',
-                ...settingsOption(settingsPath),
                 '-DgenerateBackupPoms=false',
                 ...processAllModulesOption
             ]
@@ -117,11 +117,11 @@ async function deploy(logger, mvnw, nextVersion, mavenTarget, settingsPath, clea
           [
               ...cleanOption,
               ...mavenTarget.split(' '),
+              ...settingsOption(settingsPath),
               ...debugOption,
               '--batch-mode',
               '--no-transfer-progress',
-              '-DskipTests',
-              ...settingsOption(settingsPath)
+              '-DskipTests'
           ]
         );
     } catch (e) {

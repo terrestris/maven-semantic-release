@@ -13,7 +13,6 @@ const {
 } = require('@semantic-release/git/lib/git');
 
 const { glob } = require("glob");
-const SemanticReleaseError = require("@semantic-release/error");
 
 /**
  * @param {import("./plugin-config").PluginConfig} pluginConfig
@@ -42,7 +41,7 @@ module.exports = async function success(pluginConfig, {
 
     await updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug);
     if (!options?.repositoryUrl) {
-        logger.log('No git repository url configured. No files are commited.');
+        logger.error('No git repository url configured. No files are commited.');
         return;
     }
 
