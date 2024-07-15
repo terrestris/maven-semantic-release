@@ -3,6 +3,7 @@ const execa = require('execa');
 /**
  * @param {string} file
  * @param {string[]} options
+ * @private
  */
 function exec(file, options) {
     const childProcess = execa(file, options);

@@ -4,10 +4,11 @@
   "description": "a very simple maven plugin for semantic release",
   "main": "index.js",
   "scripts": {
-    "release": "release-it",
+    "check": "npm run typecheck && npm test",
     "doc": "jsdoc2md src/plugin-config.js | ./replace-docs.sh",
-    "check": "npm run typecheck",
-    "typecheck": "tsc --pretty --noEmit true --emitDeclarationOnly false"
+    "test": "jest",
+    "typecheck": "tsc --pretty --noEmit true --emitDeclarationOnly false",
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -26,13 +27,22 @@
     "glob": "^9.2.1"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.14.10",
     "@types/semantic-release__error": "^3.0.3",
+    "jest": "^29.7.0",
     "jsdoc-to-markdown": "^8.0.0",
     "release-it": "^16.1.5",
     "typescript": "^5.5.3"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "src/**/*",
+    "LICENSE",
+    "README.md",
+    "index.js",
+    "package.json"
+  ]
 }

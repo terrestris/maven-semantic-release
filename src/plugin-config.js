@@ -19,6 +19,7 @@ const SemanticReleaseError = require("@semantic-release/error");
 /**
  * @param {Partial<PluginConfig>} config
  * @returns {PluginConfig}
+ * @private
  */
 function evaluateConfig(config) {
     const withDefaults = Object.assign({
