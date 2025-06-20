@@ -15,8 +15,22 @@ const {
 const { glob } = require("glob");
 
 /**
+ * Interpolates variables in a template string using a variables object.
+ * Supports ${var} syntax.
+ * @param {string} template
+ * @param {Object} variables
+ * @returns {string}
+ */
+function interpolate(template, variables) {
+    return template.replace(/\$\{([^}]+)\}/g, (match, key) => {
+        const value = key.split('.').reduce((o, k) => (o ? o[k] : undefined), variables);
+        return value !== undefined ? value : match;
+    });
+}
+
+/**
  * @param {import("./plugin-config").PluginConfig} pluginConfig
- * @param {import("semantic-release").Context & { cwd: string }} context
+ * @param {import("semantic-release").Context & { cwd: string, nextRelease?: any }} context
  * @returns {Promise<void>}
  */
 module.exports = async function success(pluginConfig, {
@@ -24,7 +38,8 @@ module.exports = async function success(pluginConfig, {
     env,
     cwd,
     branch,
-    options
+    options,
+    nextRelease // <-- add nextRelease to context
 }) {
     const {
         updateSnapshotVersion: updateSnapshotVersionOpt,
@@ -54,7 +69,9 @@ module.exports = async function success(pluginConfig, {
     logger.log('Staging all changed files: ' + filesToCommit.join(", "));
     await add(filesToCommit, execaOptions);
     logger.log('Committing all changed pom.xml');
-    await commit(snapshotCommitMessage, execaOptions);
+    // Interpolate variables in the commit message
+    const interpolatedMessage = interpolate(snapshotCommitMessage, { nextRelease });
+    await commit(interpolatedMessage, execaOptions);
     logger.log('Pushing commit');
     await push(options.repositoryUrl, branch.name, execaOptions);
 };
