@@ -15,8 +15,8 @@ const {
 const { glob } = require("glob");
 
 /**
- * @param {import("./plugin-config").PluginConfig} pluginConfig
- * @param {import("semantic-release").Context & { cwd: string }} context
+ * @param {import('./plugin-config').PluginConfig} pluginConfig
+ * @param {object} context
  * @returns {Promise<void>}
  */
 module.exports = async function success(pluginConfig, {
@@ -32,14 +32,15 @@ module.exports = async function success(pluginConfig, {
         processAllModules,
         debug,
         settingsPath,
-        mvnw
+        mvnw,
+        verboseMaven
     } = evaluateConfig(pluginConfig)
 
     if (!updateSnapshotVersionOpt) {
         return;
     }
 
-    await updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug);
+    await updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug, verboseMaven);
     if (!options?.repositoryUrl) {
         logger.error('No git repository url configured. No files are commited.');
         return;

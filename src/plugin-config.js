@@ -12,6 +12,7 @@
  * @property {string} snapshotCommitMessage='chore: setting next snapshot version [skip ci]' The commit message used if a new snapshot version should be created.
  * @property {boolean} debug=false Sets the `-X` option for all maven calls.
  * @property {boolean} mvnw=false Use the mvnw script instead of mvn
+ * @property {boolean} verboseMaven=false Echo maven commands before running them (execa verbose: 'short').
  */
 
 const SemanticReleaseError = require("@semantic-release/error");
@@ -29,7 +30,8 @@ function evaluateConfig(config) {
         updateSnapshotVersion: false,
         snapshotCommitMessage: 'chore: setting next snapshot version [skip ci]',
         debug: false,
-        mvnw: false
+        mvnw: false,
+        verboseMaven: false // default: do not echo maven commands
     }, config);
 
     if (withDefaults.settingsPath && !/^[\w~./-]*$/.test(withDefaults.settingsPath)) {
