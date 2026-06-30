@@ -3,7 +3,7 @@ const {evaluateConfig} = require("../src/plugin-config");
 describe('evaluateConfig', () => {
     test('will reject settings path with illegal characters', () => {
         expect(() => {
-            evaluateConfig({ settingsPath: '; echo "test"' });
+            evaluateConfig({ settingsPath: '; echo "test"', opts: '-Pdev' });
         }).toThrow('Config settingsPath contains disallowed characters')
     });
 

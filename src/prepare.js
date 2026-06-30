@@ -27,8 +27,9 @@ module.exports = async function prepare(pluginConfig, {
         settingsPath,
         processAllModules,
         debug,
-        mvnw
+        mvnw,
+        opts
     } = evaluateConfig(pluginConfig);
 
-    await updateVersion(logger, mvnw, nextRelease.version, settingsPath, processAllModules, debug);
+    await updateVersion(logger, mvnw, nextRelease.version, settingsPath, processAllModules, debug, opts);
 };

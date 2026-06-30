@@ -23,16 +23,30 @@ function settingsOption(settingsPath) {
 }
 
 /**
+ * @param {string|undefined} additionalOpts
+ * @returns {string[]}
+ * @private
+ */
+function setOpts(additionalOpts) {
+    if (additionalOpts) {
+        return additionalOpts.split(' ');
+    } else {
+        return [];
+    }
+}
+
+/**
  * @param {Logger} logger
  * @param {boolean} mvnw
  * @param {string} versionStr
  * @param {string|undefined} settingsPath
  * @param {boolean} processAllModules
  * @param {boolean} debug
+ * @param {string} options
  * @returns {Promise<void>}
  * @private
  */
-async function updateVersion(logger, mvnw, versionStr, settingsPath, processAllModules, debug) {
+async function updateVersion(logger, mvnw, versionStr, settingsPath, processAllModules, debug, options) {
     logger.log(`Updating pom.xml to version ${versionStr}`);
 
     const command = mvnw ? './mvnw' : 'mvn';
@@ -50,7 +64,8 @@ async function updateVersion(logger, mvnw, versionStr, settingsPath, processAllM
                 '--no-transfer-progress',
                 '-DgenerateBackupPoms=false',
                 `-DnewVersion=${versionStr}`,
-                ...processAllModulesOption
+                ...processAllModulesOption,
+                ...setOpts(options)
             ]
         );
     } catch (e) {
@@ -66,10 +81,11 @@ async function updateVersion(logger, mvnw, versionStr, settingsPath, processAllM
  * @param {string|undefined} settingsPath
  * @param {boolean} processAllModules
  * @param {boolean} debug
+ * @param {string} options
  * @returns {Promise<void>}
  * @private
  */
-async function updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug) {
+async function updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug, options) {
     logger.log('Update pom.xml to next snapshot version');
 
     const command = mvnw ? './mvnw' : 'mvn';
@@ -87,7 +103,8 @@ async function updateSnapshotVersion(logger, mvnw, settingsPath, processAllModul
                 '--no-transfer-progress',
                 '-DnextSnapshot=true',
                 '-DgenerateBackupPoms=false',
-                ...processAllModulesOption
+                ...processAllModulesOption,
+                ...setOpts(options)
             ]
         );
     } catch (e) {
@@ -105,10 +122,11 @@ async function updateSnapshotVersion(logger, mvnw, settingsPath, processAllModul
  * @param {string|undefined} settingsPath
  * @param {boolean} clean
  * @param {boolean} debug
+ * @param {string} options
  * @returns {Promise<void>}
  * @private
  */
-async function deploy(logger, mvnw, nextVersion, mavenTarget, settingsPath, clean, debug) {
+async function deploy(logger, mvnw, nextVersion, mavenTarget, settingsPath, clean, debug, options) {
     logger.log(`Deploying version ${nextVersion} with maven`);
 
     const command = mvnw ? './mvnw' : 'mvn';
@@ -125,7 +143,8 @@ async function deploy(logger, mvnw, nextVersion, mavenTarget, settingsPath, clea
               ...debugOption,
               '--batch-mode',
               '--no-transfer-progress',
-              '-DskipTests'
+              '-DskipTests',
+              ...setOpts(options)
           ]
         );
     } catch (e) {

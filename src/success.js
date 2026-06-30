@@ -32,14 +32,15 @@ module.exports = async function success(pluginConfig, {
         processAllModules,
         debug,
         settingsPath,
-        mvnw
+        mvnw,
+        opts
     } = evaluateConfig(pluginConfig)
 
     if (!updateSnapshotVersionOpt) {
         return;
     }
 
-    await updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug);
+    await updateSnapshotVersion(logger, mvnw, settingsPath, processAllModules, debug, opts);
     if (!options?.repositoryUrl) {
         logger.error('No git repository url configured. No files are commited.');
         return;

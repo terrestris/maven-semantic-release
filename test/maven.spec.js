@@ -14,7 +14,7 @@ describe('maven', () => {
     });
 
     test('updateVersion with all options off', () => {
-        updateVersion(logger, false, '1.1.1', undefined, false, false);
+        updateVersion(logger, false, '1.1.1', undefined, false, false, "");
         expect(exec).toBeCalledWith(
             'mvn',
             [
@@ -32,7 +32,7 @@ describe('maven', () => {
     });
 
     test('updateVersion with all options on', () => {
-        updateVersion(logger, true,  '1.1.2', 'some/path', true, true);
+        updateVersion(logger, true,  '1.1.2', 'some/path', true, true, "");
         expect(exec).toBeCalledWith(
             './mvnw',
             [
@@ -54,7 +54,7 @@ describe('maven', () => {
     });
 
     test('updateSnapshotVersion with all options off', () => {
-        updateSnapshotVersion(logger, false, undefined, false, false);
+        updateSnapshotVersion(logger, false, undefined, false, false, "");
 
         expect(exec).toBeCalledWith(
             'mvn',
@@ -73,7 +73,7 @@ describe('maven', () => {
     });
 
     test('updateSnapshotVersion with all options on', () => {
-        updateSnapshotVersion(logger, true,  'some/path', true, true);
+        updateSnapshotVersion(logger, true,  'some/path', true, true, "-Pdev");
 
         expect(exec).toBeCalledWith(
         './mvnw',
@@ -86,7 +86,8 @@ describe('maven', () => {
                 '--no-transfer-progress',
                 '-DnextSnapshot=true',
                 '-DgenerateBackupPoms=false',
-                '-DprocessAllModules'
+                '-DprocessAllModules',
+                '-Pdev'
             ]
         );
 
@@ -96,7 +97,7 @@ describe('maven', () => {
     });
 
     test('deploy with all options off', () => {
-        deploy(logger, false, '1.1.3', 'deploy', undefined, false, false);
+        deploy(logger, false, '1.1.3', 'deploy', undefined, false, false, "");
 
         expect(exec).toBeCalledWith(
             'mvn',
@@ -104,7 +105,7 @@ describe('maven', () => {
                 'deploy',
                 '--batch-mode',
                 '--no-transfer-progress',
-                '-DskipTests',
+                '-DskipTests'
             ]
         );
 
@@ -114,7 +115,7 @@ describe('maven', () => {
     });
 
     test('deploy with all options on', () => {
-        deploy(logger, true, '1.1.4', 'deploy jib:build', 'some/path', true, true);
+        deploy(logger, true, '1.1.4', 'deploy jib:build', 'some/path', true, true, "-Pdev");
 
         expect(exec).toBeCalledWith(
             './mvnw',
@@ -127,7 +128,8 @@ describe('maven', () => {
                 '-X',
                 '--batch-mode',
                 '--no-transfer-progress',
-                '-DskipTests'
+                '-DskipTests',
+                '-Pdev'
             ]
         );
 
